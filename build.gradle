@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'io.qameta.allure' version '2.8.1'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.github.cdimascio:dotenv-java:2.2.0'
+    implementation 'io.rest-assured:rest-assured:4.3.2'
+    implementation 'io.rest-assured:json-path:4.3.2'
+    implementation 'io.rest-assured:json-schema-validator:4.3.2'
+    implementation 'io.qameta.allure:allure-junit5:2.13.7'
+    implementation 'io.qameta.allure:allure-rest-assured:2.13.7'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    implementation 'org.junit.jupiter:junit-jupiter-params:5.7.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    runtimeOnly "org.aspectj:aspectjweaver:1.9.6"
+}
+
+applicationDefaultJvmArgs = [
+        "-javaagent:\$APP_HOME/lib/aspectjweaver-1.9.6.jar"
+]
+
+test {
+    systemProperty "junit.jupiter.execution.parallel.enabled", true
+    systemProperty "junit.jupiter.execution.parallel.mode.default", "concurrent"
+    useJUnitPlatform()
+}
+
+allure {
+    clean = true
+    autoconfigure = true
+    version = '2.13.7'
+    downloadLink = 'https://github.com/allure-framework/allure2/releases/download/2.13.7/allure-2.13.7.zip'
+
+    useJUnit5 {
+        version = '2.13.7'
+    }
+}
